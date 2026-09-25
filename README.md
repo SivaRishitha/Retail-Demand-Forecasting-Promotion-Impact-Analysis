@@ -25,7 +25,7 @@ This project builds an end-to-end pipeline — from raw transactional data in My
 ### 2. SQL Feature Engineering
 - Joined `train` and `store` on `Store`, excluding closed-store days.
 - Aggregated daily records into a **weekly, per-store** view (`weekly_store_sales`) with engineered features: `WeeklySales`, `WeeklyCustomers`, `PromoShare`, `HadSchoolHoliday`, `HadStateHoliday`, `StoreType`, `Assortment`, `CompetitionDistance`.
-- SQL definitions: [`sql/weekly_store_sales.sql`](sql/weekly_store_sales.sql)
+- SQL definitions: [`Rossmann.sql`](Rossmann.sql)
 - Output: 166,908 weekly store-records.
 
 ### 3. Data Cleaning (Python / pandas)
@@ -37,7 +37,7 @@ This project builds an end-to-end pipeline — from raw transactional data in My
 - Seasonal decomposition (`statsmodels`) to inspect trend, yearly seasonality, and residual noise per store.
 - Fit `SARIMAX(order=(1,1,1), seasonal_order=(1,1,1,52))` per store, holding out the final 8 weeks as a test set.
 - Forecasted a **stratified random sample of 150 stores** (by `StoreType`/`Assortment`) rather than all 1,115, using `joblib` parallelization — full sequential forecasting was estimated at ~200 minutes; sampling + parallelization brought this to ~15 minutes while preserving representativeness across store categories.
-- Notebook: [`notebooks/forecasting_and_hypothesis_testing.ipynb`](notebooks/forecasting_and_hypothesis_testing.ipynb)
+- Notebook: [`Rossmann.ipynb`](Rossmann.ipynb)
 
 **Result:** Mean MAPE of **17.7%** across 150 stores (range: 7.6%–45.7%), all model fits successful.
 
@@ -55,7 +55,7 @@ A 4-page interactive report:
 | **Promo Impact** | Promo vs. non-promo sales by month, promo lift % by month, and supporting statistical significance metrics |
 | **Store Segmentation** | Forecast accuracy (MAPE) broken down by `StoreType` and `Assortment`, plus a MAPE-vs-RMSE scatter across all sampled stores |
 
-Dashboard file: [`dashboard/retail_forecasting_dashboard.pbix`](dashboard/retail_forecasting_dashboard.pbix)
+Dashboard file: [`Rossmann.pbix`](Rossmann.pbix)
 
 ## Key Findings
 
