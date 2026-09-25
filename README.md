@@ -25,7 +25,7 @@ This project builds an end-to-end pipeline — from raw transactional data in My
 ### 2. SQL Feature Engineering
 - Joined `train` and `store` on `Store`, excluding closed-store days.
 - Aggregated daily records into a **weekly, per-store** view (`weekly_store_sales`) with engineered features: `WeeklySales`, `WeeklyCustomers`, `PromoShare`, `HadSchoolHoliday`, `HadStateHoliday`, `StoreType`, `Assortment`, `CompetitionDistance`.
-- SQL definitions: [`Rossmann.sql`](Rossmann.sql)
+- SQL definitions: [`Rossmannsql.sql`](Rossmannsql.sql)
 - Output: 166,908 weekly store-records.
 
 ### 3. Data Cleaning (Python / pandas)
